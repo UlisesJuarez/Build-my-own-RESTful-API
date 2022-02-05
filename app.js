@@ -21,7 +21,9 @@ const articleSchema={
 
 const Article=moongose.model("Article",articleSchema);
 
-app.get("/articles",function(req,res){
+app.route("/articles")
+
+.get(function(req,res){
     Article.find(function(err,foundArticles){
         if(!err){
             res.send(foundArticles);
@@ -31,7 +33,7 @@ app.get("/articles",function(req,res){
     })
 })
 
-app.post("/articles",function(req,res){
+.post(function(req,res){
     const newArticle=new Article({
         title:req.body.title,
         content:req.body.content
@@ -46,7 +48,7 @@ app.post("/articles",function(req,res){
     });
 })
 
-app.delete("/articles",function(req,res) {
+.delete(function(req,res) {
     Article.deleteMany(function (err) {
         if(!err){
             res.send("successfully deleted all articles")
