@@ -2,6 +2,7 @@ const express=require("express")
 const bodyParser=require("body-parser")
 const ejs=require("ejs")
 const moongose=require("mongoose")
+const req = require("express/lib/request")
 
 const app=express()
 
@@ -54,6 +55,20 @@ app.route("/articles")
             res.send("successfully deleted all articles")
         }else{
             res.send(err)
+        }
+    })
+})
+
+// request targetting a specific article
+
+app.route("/articles/:articleTitle")
+
+.get(function(req,res) {
+    Article.findOne({title:req.params.articleTitle},function(err,foundArticle) {
+        if(foundArticle){
+            res.send(foundArticle)
+        }else{
+            res.send("No articles matching that title was found")
         }
     })
 })
